@@ -148,3 +148,11 @@ else
     end
   end
 end
+
+println $---17
+
+subroutine $print::emptyline
+  println $
+end
+
+run $print::emptyline

@@ -17,6 +17,12 @@ def run(executions):
     for exe in executions:
         if exe is None:
             continue
+        if len(global_state.nesting) > 0 and global_state.nesting[-1] == NestState["subroutine_definition"]:
+            if exe.keyword == Keyword["end"]:
+                exe.keyword.execute([])
+                continue
+            global_state.subroutine_content.append(exe)
+            continue
         plain_arguments = []
         for arg in exe.arguments:
             if isinstance(arg, Execution):

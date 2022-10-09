@@ -1,7 +1,7 @@
 import importlib
 import re
 
-from enum import Enum
+from aenum import Enum
 from pathlib import Path
 
 # generate enum Keyword dynamically based on implemented keyword from files kfkscript/keyword_impl/<keyword>.py
