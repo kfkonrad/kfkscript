@@ -8,14 +8,20 @@ from kfkscript.execution import Execution
 def parse_keyword(line):
     logging.trace(f"parse_keyword({line})")
     first_space = line.find(" ")
-    raw_keyword = line[:first_space]
+    if first_space != -1:
+        raw_keyword = line[:first_space]
+    else:
+        raw_keyword = line
     try:
         keyword = Keyword[raw_keyword]
     except KeyError:
         print(f"Invalid Keyword {raw_keyword} in line {global_state.line_number}, exiting")
         exit(1)
     else:
-        rest_of_line = line[first_space + 1 :]
+        if first_space != -1:
+            rest_of_line = line[first_space + 1 :]
+        else:
+            rest_of_line = ''
         return keyword, rest_of_line
 
 
@@ -57,11 +63,17 @@ def parse_line(line):
 
 def parse_remaining_line(line):
     logging.trace(f"parse_line({line})")
+    try:
+        line = line.strip()
+    except Exception:
+        pass
     if line is None or line == "" or line[0] == "#":
         return None, None
     keyword, rest_of_line = parse_keyword(line)
+    rest_of_line = rest_of_line.strip()
     arguments = []
     for i in range(keyword.number_of_arguments):
         new_arg, rest_of_line = parse_argument(rest_of_line)
+        rest_of_line = rest_of_line.strip()
         arguments.append(new_arg)
     return Execution(keyword, arguments), rest_of_line
