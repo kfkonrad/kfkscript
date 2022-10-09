@@ -1,3 +1,4 @@
+print 'Hello, World!"
 let $foo 'Hello, World!"
 println tel $foo
 println let $bar tel $foo
@@ -8,6 +9,12 @@ let $a '$b"
 let tel $a 'foo"
 println tel tel $a
 
-let 'er" plus $' strunescape ' \ntest"
 println $-----
-println tel $er
+let 'c" plus $' str::unescape ' test\ntest"
+println tel $c
+
+println $-----
+let 'd" plus $' str::unescape ' test\ntest" println tel $d
+
+println $----
+println $secret println $message
