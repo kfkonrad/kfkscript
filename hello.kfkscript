@@ -1,0 +1,13 @@
+let $foo 'Hello, World!"
+println tel $foo
+println let $bar tel $foo
+println tel $bar
+
+println $-----
+let $a '$b"
+let tel $a 'foo"
+println tel tel $a
+
+let 'er" plus $' strunescape ' \ntest"
+println $-----
+println tel $er
