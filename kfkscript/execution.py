@@ -29,8 +29,16 @@ def run(executions):
                 plain_arguments.append(run([arg]))
             else:
                 plain_arguments.append(arg)
+        # this means no execution is currently supposed to take place
+        # this means were in the unentered part of an if/else clause
+        # we still need to explicitly skip this because the parser can't
+        # know when/if it should skip certain branches
         if len(global_state.nesting) > 0 and global_state.nesting[-1] in (NestState["else"], NestState["ignore"]) and exe.keyword not in (Keyword["end"], Keyword["else"]):
             if exe.keyword == Keyword["if"]:
+                # the ignore state helps keeping a valid NestState when the
+                # above if-clause inevitably ends. Otherwise the above
+                # skipping mechanism would wrongly execute nested ifs in
+                # skipped branches
                 global_state.nesting.append(NestState["ignore"])
             continue
         ret = exe.keyword.execute(plain_arguments)
