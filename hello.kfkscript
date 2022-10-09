@@ -4,17 +4,147 @@ println tel $foo
 println let $bar tel $foo
 println tel $bar
 
-println $-----
+println $----1
 let $a '$b"
 let tel $a 'foo"
 println tel tel $a
 
-println $-----
+println $----2
 let 'c" plus $' str::unescape ' test\ntest"
 println tel $c
 
-println $-----
+println $----3
 let 'd" plus $' str::unescape ' test\ntest" println tel $d
 
-println $----
+println $----4
 println $secret println $message
+
+println $----5
+if true
+  println 'it was good"
+else
+  println 'it was bad"
+end
+
+println $----6
+if false
+  println 'it was bad2"
+else
+  println 'it was good2"
+end
+
+println $----7
+if true
+  println 'it was good"
+  if true
+    println 'it was good2"
+  else
+    println 'it was bad2"
+  end
+else
+  println 'it was bad"
+end
+
+println $----8
+if true
+  println 'it was good"
+  if false
+    println 'it was bad2"
+  else
+    println 'it was good2"
+  end
+else
+  println 'it was bad"
+end
+
+println $----9
+if false
+  println 'it was bad"
+  if true
+    println 'it was good2"
+  else
+    println 'it was bad2"
+  end
+else
+  println 'it was good"
+end
+
+println $---10
+if false
+  println 'it was bad"
+  if false
+    println 'it was bad2"
+  else
+    println 'it was good2"
+  end
+else
+  println 'it was good"
+end
+
+println $---11
+if true
+  println 'it was good"
+else
+  println 'it was bad"
+  if true
+    println 'it was good2"
+  else
+    println 'it was bad2"
+  end
+end
+
+println $---12
+if true
+  println 'it was good"
+else
+  println 'it was bad"
+  if false
+    println 'it was bad2"
+  else
+    println 'it was good2"
+  end
+end
+
+println $---13
+if false
+  println 'it was bad"
+else
+  println 'it was good"
+  if true
+    println 'it was good2"
+  else
+    println 'it was bad2"
+  end
+end
+
+println $---14
+if false
+  println 'it was bad"
+else
+  println 'it was good"
+  if false
+    println 'it was bad2"
+  else
+    println 'it was good2"
+  end
+end
+
+println $---15
+if false println 'it was bad" else println 'it was good" if false println 'it was bad2" else println 'it was good2" end end # 14 aber als Einzeiler
+
+println $---16
+if false
+  println 'it was bad"
+else
+  println 'it was good"
+  if false
+    println 'it was bad2"
+  else
+    println 'it was good2"
+    if true
+      println 'it was good3"
+    else
+      println 'it was bad3"
+    end
+  end
+end

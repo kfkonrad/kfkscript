@@ -2,6 +2,7 @@ import logging
 
 import kfkscript.global_state as global_state
 from kfkscript.keyword import Keyword
+from kfkscript.nestState import NestState
 
 class Execution:
     def __init__(self, keyword, arguments):
@@ -22,5 +23,9 @@ def run(executions):
                 plain_arguments.append(run([arg]))
             else:
                 plain_arguments.append(arg)
+        if len(global_state.nesting) > 0 and global_state.nesting[-1] in (NestState["else"], NestState["ignore"]) and exe.keyword not in (Keyword["end"], Keyword["else"]):
+            if exe.keyword == Keyword["if"]:
+                global_state.nesting.append(NestState["ignore"])
+            continue
         ret = exe.keyword.execute(plain_arguments)
     return ret
