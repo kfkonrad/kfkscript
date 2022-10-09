@@ -10,4 +10,4 @@ def execute(arguments):
     previous_state = global_state.nesting.pop()
     if previous_state == NestState.subroutine_definition:
         global_state.subroutines[global_state.subroutine_name] = global_state.subroutine_content
-    return True
+    return global_state.ret

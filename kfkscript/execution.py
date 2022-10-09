@@ -17,10 +17,14 @@ def run(executions):
     for exe in executions:
         if exe is None:
             continue
-        if len(global_state.nesting) > 0 and global_state.nesting[-1] == NestState["subroutine_definition"]:
+        if len(global_state.nesting) > 0 and NestState.subroutine_definition in global_state.nesting:
+            if exe.keyword == Keyword["if"]:
+                global_state.nesting.append(NestState["ignore"])
             if exe.keyword == Keyword["end"]:
+                previous_nest_state = global_state.nesting[-1]
                 exe.keyword.execute([])
-                continue
+                if previous_nest_state == NestState.subroutine_definition:
+                    continue
             global_state.subroutine_content.append(exe)
             continue
         plain_arguments = []

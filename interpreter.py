@@ -13,7 +13,7 @@ logging.Logger.trace = functools.partialmethod(logging.Logger.log, logging.TRACE
 logging.trace = functools.partial(logging.log, logging.TRACE)
 
 #logging.getLogger().setLevel(logging.DEBUG)
-# logging.getLogger().setLevel(logging.TRACE)
+#logging.getLogger().setLevel(logging.TRACE)
 
 def main():
     global line_number
@@ -24,6 +24,7 @@ def main():
 
     for line in kfkscript:
         global_state.line_number += 1
+        logging.trace(f"line_number = {global_state.line_number}")
         executions = parse_line(line[:-1])
         run(executions)
         # print(execution)

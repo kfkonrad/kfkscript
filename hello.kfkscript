@@ -156,3 +156,59 @@ subroutine $print::emptyline
 end
 
 run $print::emptyline
+
+println $---18
+
+let $counter 10
+subroutine $countdown
+  println tel $counter
+  let $counter minus tel $counter 1
+  if not equals tel $counter 0
+    run $countdown
+  end
+end
+
+run $countdown
+
+println $---19
+
+let $counter 10
+subroutine $countdown
+  println tel $counter
+  let $counter minus tel $counter 2
+  if or greater_than tel $counter 0 equals tel $counter 0
+    run $countdown
+  end
+end
+
+run $countdown
+
+println $---20
+
+let $addone::to 7
+subroutine $addone
+  plus tel $addone::to 1
+end
+
+println run $addone
+
+println $---21
+let $fac::num 10
+
+subroutine $fac
+  print 'The factorial of "
+  print tel $fac::num
+  print ' is: "
+  println run $fac::helper
+end
+
+subroutine $fac::helper
+  if equals tel $fac::num 1
+    return 1
+  else
+    let $fac::num minus tel $fac::num 1
+    return multiply plus tel $fac::num 1 run $fac::helper
+  end
+end
+
+run $fac

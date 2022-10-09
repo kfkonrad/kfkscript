@@ -31,9 +31,29 @@ def parse_argument(line):
         return parse_dollar_string(line)
     elif line[0] == "'":
         return parse_single_quote_string(line)
+    elif line[0] in "-0123456789.":
+        return parse_number(line)
     else:
         return parse_remaining_line(line)
 
+
+def parse_number(line):
+    logging.trace(f"parse_number({line})")
+    if line[0] not in "-0123456789.":
+        raise ValueError(f"invalid number: {line}")
+    end = line.find(" ")
+    if end == -1:
+        return convert_to_number(line[:]), ""
+    return convert_to_number(line[:end]), line[end + 1 :]
+
+def convert_to_number(number_string):
+    try:
+        if '.' in number_string:
+            return float(number_string)
+        return int(number_string)
+    except Exception:
+        print(f"Invalid number: {number_string}")
+        exit(1)
 
 def parse_single_quote_string(line):
     logging.trace(f"parse_single_quote_string({line})")
