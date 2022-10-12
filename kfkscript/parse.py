@@ -2,7 +2,7 @@ import logging
 
 from kfkscript import global_state
 from kfkscript.keyword import Keyword
-from kfkscript.execution import Execution
+from kfkscript.invocation import Invocation
 
 
 def parse_keyword(line):
@@ -79,11 +79,11 @@ def parse_dollar_string(line):
 
 
 def parse_line(line):
-    executions = []
+    invocations = []
     while line is not None:
-        exe, line = parse_remaining_line(line)
-        executions.append(exe)
-    return executions
+        inv, line = parse_remaining_line(line)
+        invocations.append(inv)
+    return invocations
 
 
 def parse_remaining_line(line):
@@ -101,4 +101,4 @@ def parse_remaining_line(line):
         new_arg, rest_of_line = parse_argument(rest_of_line)
         rest_of_line = rest_of_line.strip()
         arguments.append(new_arg)
-    return Execution(keyword, arguments), rest_of_line
+    return Invocation(keyword, arguments), rest_of_line

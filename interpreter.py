@@ -4,7 +4,7 @@ import sys
 
 from kfkscript import global_state
 from kfkscript.parse import parse_line
-from kfkscript.execution import run
+from kfkscript.invocation import execute
 
 logging.TRACE = 5
 logging.addLevelName(logging.TRACE, "TRACE")
@@ -24,8 +24,8 @@ def main():
     for line in kfkscript:
         global_state.line_number += 1
         logging.trace(f"line_number = {global_state.line_number}")
-        executions = parse_line(line[:-1])
-        run(executions)
+        invocations = parse_line(line[:-1])
+        execute(invocations)
 
 
 main()
