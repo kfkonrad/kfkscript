@@ -1,6 +1,8 @@
-import kfkscript.global_state as global_state
-from kfkscript.nestState import NestState 
+from kfkscript import global_state
+from kfkscript.nestState import NestState
+
 number_of_arguments = 0
+
 
 def execute(arguments):
     if len(global_state.nesting) > 0:

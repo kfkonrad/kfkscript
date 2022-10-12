@@ -1,22 +1,23 @@
 import importlib
 import re
 
-from aenum import Enum
 from pathlib import Path
+from aenum import Enum
 
-# generate enum Keyword dynamically based on implemented keyword from files kfkscript/keyword_impl/<keyword>.py
+# generate enum Keyword dynamically based on implemented keyword from files
+# kfkscript/keyword_impl/<keyword>.py
 Keyword = Enum(
     "Keyword",
     [
         file.name[:-3]
         for file in Path("kfkscript/keyword_impl/").iterdir()
-        if re.search("[a-z]\.py", file.name)
+        if re.search(r"[a-z]\.py", file.name)
     ],
 )
 
 # import the implementations of all keywords.
 for keyword in Keyword:
-    module = importlib.import_module(f'kfkscript.keyword_impl.{keyword.name}')
+    module = importlib.import_module(f"kfkscript.keyword_impl.{keyword.name}")
     exec(f"_{keyword.value} = module")
 
 # map imported implementations to keywords as __impl property

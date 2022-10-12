@@ -1,6 +1,6 @@
 import logging
 
-import kfkscript.global_state as global_state
+from kfkscript import global_state
 from kfkscript.keyword import Keyword
 from kfkscript.execution import Execution
 
@@ -15,13 +15,15 @@ def parse_keyword(line):
     try:
         keyword = Keyword[raw_keyword]
     except KeyError:
-        print(f"Invalid Keyword {raw_keyword} in line {global_state.line_number}, exiting")
+        print(
+            f"Invalid Keyword {raw_keyword} in line {global_state.line_number}, exiting"
+        )
         exit(1)
     else:
         if first_space != -1:
             rest_of_line = line[first_space + 1 :]
         else:
-            rest_of_line = ''
+            rest_of_line = ""
         return keyword, rest_of_line
 
 
@@ -29,12 +31,11 @@ def parse_argument(line):
     logging.trace(f"parse_argument({line})")
     if line[0] == "$":
         return parse_dollar_string(line)
-    elif line[0] == "'":
+    if line[0] == "'":
         return parse_single_quote_string(line)
-    elif line[0] in "-0123456789.":
+    if line[0] in "-0123456789.":
         return parse_number(line)
-    else:
-        return parse_remaining_line(line)
+    return parse_remaining_line(line)
 
 
 def parse_number(line):
@@ -46,14 +47,16 @@ def parse_number(line):
         return convert_to_number(line[:]), ""
     return convert_to_number(line[:end]), line[end + 1 :]
 
+
 def convert_to_number(number_string):
     try:
-        if '.' in number_string:
+        if "." in number_string:
             return float(number_string)
         return int(number_string)
     except Exception:
         print(f"Invalid number: {number_string}")
         exit(1)
+
 
 def parse_single_quote_string(line):
     logging.trace(f"parse_single_quote_string({line})")
@@ -74,12 +77,14 @@ def parse_dollar_string(line):
         return line[1:], ""
     return line[1:end], line[end + 1 :]
 
+
 def parse_line(line):
     executions = []
-    while line != None:
+    while line is not None:
         exe, line = parse_remaining_line(line)
         executions.append(exe)
     return executions
+
 
 def parse_remaining_line(line):
     logging.trace(f"parse_line({line})")
@@ -92,7 +97,7 @@ def parse_remaining_line(line):
     keyword, rest_of_line = parse_keyword(line)
     rest_of_line = rest_of_line.strip()
     arguments = []
-    for i in range(keyword.number_of_arguments):
+    for _ in range(keyword.number_of_arguments):
         new_arg, rest_of_line = parse_argument(rest_of_line)
         rest_of_line = rest_of_line.strip()
         arguments.append(new_arg)
