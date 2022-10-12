@@ -212,3 +212,23 @@ subroutine $fac::helper
 end
 
 run $fac
+
+println $---22
+
+subroutine $fib
+  scope::push
+    let $fib@1 scope::outer::tel $fib@1
+    if less_than tel $fib@1 3
+      return 1
+    else
+      let $fib@1 minus tel $fib@1 1
+      let $fib-1 run $fib
+      let $fib@1 minus tel $fib@1 1
+      let $fib-2 run $fib
+      return plus tel $fib-1 tel $fib-2
+    end
+  scope::pop
+end
+
+let $fib@1 12
+println run $fib

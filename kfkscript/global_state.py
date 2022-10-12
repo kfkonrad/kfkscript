@@ -8,3 +8,5 @@ subroutine_name = ''
 subroutine_content = []
 
 ret = None
+
+scopes = []
