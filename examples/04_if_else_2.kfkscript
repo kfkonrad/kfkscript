@@ -1,0 +1,9 @@
+let $a 1
+let $b 0
+if greater_than tel $a tel $b
+  println 'foo"
+  # more commands
+else
+  println 'bar"
+  # more commands
+end

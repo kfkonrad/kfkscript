@@ -1,0 +1,5 @@
+if equals 'a" $a
+  println 'foo"
+else
+  println 'bar"
+end

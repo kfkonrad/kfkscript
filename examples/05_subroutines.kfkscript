@@ -1,0 +1,6 @@
+subroutine $hello
+  println 'Hello, World!"
+  # more commands...
+end
+
+run $hello
