@@ -1,7 +1,7 @@
 subroutine $countdown
   println tel $counter
-  let $counter minus tel $counter 1
-  if not equals tel $counter 0
+  let $counter - tel $counter 1
+  if ! == tel $counter 0
     run $countdown
   end
 end

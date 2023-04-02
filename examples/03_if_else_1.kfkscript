@@ -1,4 +1,4 @@
-if equals 'a" $a
+if == 'a" $a
   println 'foo"
 else
   println 'bar"

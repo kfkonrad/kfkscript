@@ -1,15 +1,14 @@
-# kfkscript
 subroutine $fib
   scope::push
     let $n scope::outer::tel $n
-    if less_than tel $n 3
+    if < tel $n 3
       return 1
     else
-      let $n minus tel $n 1
+      let $n - tel $n 1
       let $a run $fib
-      let $n minus tel $n 1
+      let $n - tel $n 1
       let $b run $fib
-      return plus tel $a tel $b
+      return + tel $a tel $b
     end
   scope::pop
 end
