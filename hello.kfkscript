@@ -10,11 +10,11 @@ let tel $a 'foo"
 println tel tel $a
 
 println $----2
-let 'c" plus $' str::unescape ' test\ntest"
+let 'c" + $' str::unescape ' test\ntest"
 println tel $c
 
 println $----3
-let 'd" plus $' str::unescape ' test\ntest" println tel $d
+let 'd" + $' str::unescape ' test\ntest" println tel $d
 
 println $----4
 println $secret println $message
@@ -162,8 +162,8 @@ println $---18
 let $counter 10
 subroutine $countdown
   println tel $counter
-  let $counter minus tel $counter 1
-  if not equals tel $counter 0
+  let $counter - tel $counter 1
+  if ! == tel $counter 0
     run $countdown
   end
 end
@@ -175,8 +175,8 @@ println $---19
 let $counter 10
 subroutine $countdown
   println tel $counter
-  let $counter minus tel $counter 2
-  if or greater_than tel $counter 0 equals tel $counter 0
+  let $counter - tel $counter 2
+  if || > tel $counter 0 == tel $counter 0
     run $countdown
   end
 end
@@ -187,7 +187,7 @@ println $---20
 
 let $addone::to 7
 subroutine $addone
-  plus tel $addone::to 1
+  + tel $addone::to 1
 end
 
 println run $addone
@@ -203,11 +203,11 @@ subroutine $fac
 end
 
 subroutine $fac::helper
-  if equals tel $fac::num 1
+  if == tel $fac::num 1
     return 1
   else
-    let $fac::num minus tel $fac::num 1
-    return multiply plus tel $fac::num 1 run $fac::helper
+    let $fac::num - tel $fac::num 1
+    return * + tel $fac::num 1 run $fac::helper
   end
 end
 
@@ -218,14 +218,14 @@ println $---22
 subroutine $fib
   scope::push
     let $fib@1 scope::outer::tel $fib@1
-    if less_than tel $fib@1 3
+    if < tel $fib@1 3
       return 1
     else
-      let $fib@1 minus tel $fib@1 1
+      let $fib@1 - tel $fib@1 1
       let $fib-1 run $fib
-      let $fib@1 minus tel $fib@1 1
+      let $fib@1 - tel $fib@1 1
       let $fib-2 run $fib
-      return plus tel $fib-1 tel $fib-2
+      return + tel $fib-1 tel $fib-2
     end
   scope::pop
 end

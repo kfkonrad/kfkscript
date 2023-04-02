@@ -33,8 +33,8 @@ def parse_argument(line):
         return parse_dollar_string(line)
     if line[0] == "'":
         return parse_single_quote_string(line)
-    if line[0] in "-0123456789.":
-        return parse_number(line)
+    if line[0] in "-0123456789." and  (line[0] != "-" or (len(line) > 1 and line[1] != " ")):
+            return parse_number(line)
     return parse_remaining_line(line)
 
 
