@@ -10,3 +10,5 @@ subroutine_content = []
 ret = None
 
 scopes = []
+
+variadic_number = 0

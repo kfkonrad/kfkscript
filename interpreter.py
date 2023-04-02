@@ -24,8 +24,8 @@ def main():
     for line in kfkscript:
         global_state.line_number += 1
         logging.trace(f"line_number = {global_state.line_number}")
-        invocations = parse_line(line[:-1])
-        execute(invocations)
+        for invocation in parse_line(line[:-1]):
+            execute(invocation)
 
 
 main()

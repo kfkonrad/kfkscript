@@ -7,4 +7,6 @@ number_of_arguments = 1
 
 def execute(arguments):
     subroutine_name = arguments[0]
-    return invocation.execute(global_state.subroutines[subroutine_name])
+    for inv in global_state.subroutines[subroutine_name]:
+        result = invocation.execute(inv)
+    return result

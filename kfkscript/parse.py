@@ -79,11 +79,9 @@ def parse_dollar_string(line):
 
 
 def parse_line(line):
-    invocations = []
     while line is not None:
         inv, line = parse_remaining_line(line)
-        invocations.append(inv)
-    return invocations
+        yield inv
 
 
 def parse_remaining_line(line):
@@ -94,17 +92,16 @@ def parse_remaining_line(line):
         pass
     if line is None or line == "" or line[0] == "#":
         return None, None
-    if line[:3] == "...":
-        variadic_number, rest_of_line = parse_number(line[3:])
-        variadic_number = int(variadic_number) - 1
+    if len(line) >= 4 and line[:3] == "..." and line[3] in "0123456789":
+        global_state.variadic_number, rest_of_line = parse_number(line[3:])
+        global_state.variadic_number = int(global_state.variadic_number) - 1
     else:
         rest_of_line = line
-        variadic_number = 0
 
     keyword, rest_of_line = parse_keyword(rest_of_line)
     rest_of_line = rest_of_line.strip()
     arguments = []
-    for _ in range(variadic_number + keyword.number_of_arguments):
+    for _ in range(global_state.variadic_number + keyword.number_of_arguments):
         new_arg, rest_of_line = parse_argument(rest_of_line)
         rest_of_line = rest_of_line.strip()
         arguments.append(new_arg)
