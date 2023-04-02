@@ -1,4 +1,5 @@
 import importlib
+import importlib.util
 import re
 
 from pathlib import Path
@@ -11,13 +12,18 @@ Keyword = Enum(
     [
         file.name[:-3]
         for file in Path("kfkscript/keyword_impl/").iterdir()
-        if re.search(r"[a-z]\.py", file.name)
+        if re.search(r"\.py$", file.name)
     ],
 )
 
 # import the implementations of all keywords.
 for keyword in Keyword:
-    module = importlib.import_module(f"kfkscript.keyword_impl.{keyword.name}")
+    spec = importlib.util.spec_from_file_location(
+        name=f"_{keyword.value}",
+        location=f"kfkscript/keyword_impl/{keyword.name}.py",
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
     exec(f"_{keyword.value} = module")
 
 # map imported implementations to keywords as __impl property
