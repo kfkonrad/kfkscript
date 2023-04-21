@@ -102,6 +102,9 @@ def parse_remaining_line(line):
     rest_of_line = rest_of_line.strip()
     arguments = []
     for _ in range(global_state.variadic_number + keyword.number_of_arguments):
+        # reset variadic number to parse arguments which themselves may be variadic
+        # we can safely reset it here because will no longer be accessed for the current invocation
+        global_state.variadic_number = 0
         new_arg, rest_of_line = parse_argument(rest_of_line)
         rest_of_line = rest_of_line.strip()
         arguments.append(new_arg)

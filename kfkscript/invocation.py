@@ -16,7 +16,6 @@ class Invocation:
 
 def execute(inv):
     logging.trace(f"execute({inv})")
-    global_state.variadic_number = 0
     if inv is None:
         return None
     if (
