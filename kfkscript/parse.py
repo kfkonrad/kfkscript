@@ -12,8 +12,11 @@ def __first_whitespace(string):
 
 def __strip_with_linecount(string):
     remaining_string = string
-    while remaining_string[0].isspace():
+    in_comment = remaining_string[0] == "#"
+    while len(remaining_string) > 0 and (remaining_string[0].isspace() or in_comment or remaining_string[0] == "#"):
+        in_comment = in_comment or remaining_string[0] == "#"
         if remaining_string[0] == "\n":
+            in_comment = False
             global_state.line_number += 1
             # print("_LN", global_state.line_number)
         remaining_string = remaining_string[1:]
@@ -21,22 +24,21 @@ def __strip_with_linecount(string):
 
 def parse_keyword(script):
     logging.trace(f"parse_keyword({script[:3]})")
-    remaining_script = __strip_with_linecount(script)
-    first_space = __first_whitespace(remaining_script)
+    first_space = __first_whitespace(script)
     if first_space != -1:
-        raw_keyword = remaining_script[:first_space]
+        raw_keyword = script[:first_space]
     else:
-        raw_keyword = remaining_script
+        raw_keyword = script
     try:
         keyword = Keyword[raw_keyword]
     except KeyError:
         print(
-            f"Invalid Keyword {raw_keyword} in line {global_state.line_number}, exiting"
+            f"Invalid Keyword {repr(raw_keyword)} in line {global_state.line_number}, exiting"
         )
         exit(1)
     else:
         if first_space != -1:
-            remaining_script = remaining_script[first_space:]
+            remaining_script = script[first_space:]
         else:
             remaining_script = ""
         return keyword, remaining_script
@@ -104,14 +106,12 @@ def parse_next_invocation(script):
 def parse_remaining_script(script):
     logging.trace(f"parse_line({script[:3]})")
 
-    if script is None or script == "" or script[0] == "#":
+    if script is None or script == "":
         return None, None
-    if len(script) >= 4 and script[:3] == "..." and script[3] in "0123456789":
-        global_state.variadic_number, remaining_script = parse_number(script[3:])
-        global_state.variadic_number = int(global_state.variadic_number) - 1
-    else:
-        remaining_script = script
 
+    remaining_script = __strip_with_linecount(script)
+    if remaining_script == "":
+        return None, None
     keyword, remaining_script = parse_keyword(remaining_script)
     arguments = []
     current_variadic_number = global_state.variadic_number + keyword.number_of_arguments
