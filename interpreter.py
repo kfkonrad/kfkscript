@@ -3,7 +3,7 @@ import logging
 import sys
 
 from kfkscript import global_state
-from kfkscript.parse import parse_line
+from kfkscript.parse import parse_next_invocation
 from kfkscript.invocation import execute
 
 logging.TRACE = 5
@@ -19,13 +19,10 @@ def main():
     logging.trace("main")
     filename = sys.argv[1]
     # arguments = sys.argv[:1]
-    kfkscript = open(filename, "r").readlines()
+    kfkscript = open(filename, "r").read()
 
-    for line in kfkscript:
-        global_state.line_number += 1
-        logging.trace(f"line_number = {global_state.line_number}")
-        for invocation in parse_line(line[:-1]):
-            execute(invocation)
-
+    while kfkscript is not None:
+        invocation, kfkscript = parse_next_invocation(kfkscript)
+        execute(invocation)
 
 main()

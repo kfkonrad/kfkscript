@@ -2,7 +2,7 @@ variables = {}
 subroutines = {}
 pure_keywords = {}
 
-line_number = 0
+line_number = 1
 nesting = []
 
 subroutine_name = ""

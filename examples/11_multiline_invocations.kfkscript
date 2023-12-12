@@ -1,0 +1,23 @@
+println
++ 1
+1
+
+subroutine $druck
+  print
+
+    tel
+      $DRUCK@ARGS@1
+end
+
+keyword $drucknz
+  1
+  println tel $args@1
+end
+
+drucknz 'Hallo, Welt!"
+
+let $DRUCK@ARGS@1 'Hallo,
+Welt!"
+
+run $druck
+println $
